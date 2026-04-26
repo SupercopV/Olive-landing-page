@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Olive – The Safest Way to Shop for Groceries</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#2d3f1f;
+  --green-mid:#3d5228;
+  --green-light:#5a7a38;
+  --bg:#f3f1ea;
+  --bg2:#eceae2;
+  --white:#ffffff;
+  --text:#1c1c1c;
+  --muted:#6b6b6b;
+  --border:#dedad0;
+  --yellow:#f5e6a3;
+  --pink:#f9ddd6;
+  --card:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─── NAV ─── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 48px;background:var(--bg);position:sticky;top:0;z-index:200;
+  border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:6px;text-decoration:none;font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--green)}
+.logo svg{width:28px;height:28px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--text);font-size:.875rem;font-weight:500;display:flex;align-items:center;gap:3px;transition:color .2s}
+.nav-links a:hover{color:var(--green)}
+.drop::after{content:'▾';font-size:.65rem;opacity:.6}
+.nav-right{display:flex;align-items:center;gap:14px}
+.btn-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:500;color:var(--text);cursor:pointer}
+.btn-pill{background:var(--green);color:#fff;border:none;padding:9px 20px;border-radius:999px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s,transform .15s}
+.btn-pill:hover{background:var(--green-mid);transform:translateY(-1px)}
+.btn-pill.outline{background:transparent;border:1.5px solid #fff;color:#fff}
+.btn-pill.outline:hover{background:rgba(255,255,255,.1)}
+.btn-pill.green-outline{background:transparent;border:1.5px solid var(--green);color:var(--green)}
+.btn-pill.green-outline:hover{background:var(--green);color:#fff}
+
+/* ─── HERO ─── */
+.hero{text-align:center;padding:64px 24px 0;animation:fadeUp .8s ease both}
+.trust-chip{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fff;border:1px solid var(--border);border-radius:999px;
+  padding:5px 14px 5px 5px;font-size:.78rem;color:var(--muted);margin-bottom:24px;
+}
+.avatars{display:flex}
+.avatars img{width:26px;height:26px;border-radius:50%;border:2px solid #fff;margin-left:-7px;object-fit:cover}
+.avatars img:first-child{margin-left:0}
+h1.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.6rem,5.5vw,4rem);line-height:1.12;
+  color:var(--green);margin-bottom:18px;
+  animation:fadeUp .8s .1s ease both;
+}
+.hero-sub{font-size:.98rem;color:var(--muted);line-height:1.75;max-width:460px;margin:0 auto 32px;animation:fadeUp .8s .15s ease both}
+.hero-btns{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp .8s .2s ease both}
+.btn-ios{
+  background:var(--green);color:#fff;border:none;padding:12px 24px;
+  border-radius:999px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .2s,transform .15s;
+}
+.btn-ios:hover{background:var(--green-mid);transform:translateY(-1px)}
+.btn-text{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:5px;transition:gap .2s}
+.btn-text:hover{gap:9px}
+
+/* phone mockup container */
+.phone-stage{
+  background:var(--bg2);border-radius:28px;
+  max-width:820px;margin:0 auto 90px;
+  padding:44px 32px 0;overflow:hidden;
+  display:flex;align-items:flex-end;justify-content:center;gap:0;
+  animation:fadeUp .9s .3s ease both;
+}
+.side-phone{
+  width:120px;flex-shrink:0;
+  background:#dedad0;border-radius:22px;
+  opacity:.4;align-self:flex-end;margin-bottom:0;
+  overflow:hidden;
+}
+.side-phone img{width:100%;display:block;filter:blur(1px)}
+.main-phone{
+  width:268px;flex-shrink:0;z-index:2;
+  background:#fff;border-radius:38px;
+  border:2px solid #ccc;
+  box-shadow:0 28px 80px rgba(0,0,0,.15),0 8px 20px rgba(0,0,0,.08);
+  overflow:hidden;padding:14px 12px 20px;
+  animation:float 4s ease-in-out infinite;
+}
+.notch{width:72px;height:5px;background:#222;border-radius:999px;margin:0 auto 12px}
+.ph-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ph-header-t{font-size:.6rem;font-weight:700;color:#222}
+.ph-icons{display:flex;gap:5px}
+.ph-icons span{width:16px;height:16px;border-radius:50%;background:#f0ede6;display:flex;align-items:center;justify-content:center;font-size:.45rem}
+.shelf{display:flex;gap:5px;margin-bottom:10px}
+.shelf-item{flex:1;height:64px;border-radius:10px;background:#f0ede6;position:relative;overflow:hidden}
+.shelf-item.active{border:2px solid var(--green)}
+.shelf-item img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.pcard{background:#fafaf7;border:1px solid #ece9e0;border-radius:12px;padding:9px;margin-bottom:8px}
+.pcard-inner{display:flex;gap:7px;align-items:flex-start}
+.pcard-img{width:38px;height:38px;border-radius:7px;object-fit:cover;flex-shrink:0}
+.pcard-info{flex:1}
+.pcard-name{font-size:.58rem;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:1px}
+.pcard-sub{font-size:.52rem;color:#888;margin-bottom:5px}
+.score-row{display:flex;align-items:center;justify-content:space-between}
+.score-badge{background:#fff3f3;color:#d95a3c;font-size:.56rem;font-weight:800;padding:2px 7px;border-radius:999px;border:1px solid #f5c5b8}
+.sa{display:flex;gap:4px}
+.sa span{font-size:.55rem;color:#aaa}
+.oliver{background:#fffbf0;border:1px solid #f0e8c8;border-radius:10px;padding:7px 9px}
+.oliver-h{display:flex;align-items:center;gap:4px;margin-bottom:4px}
+.oliver-ico{width:13px;height:13px;border-radius:50%;background:#f5c842;display:flex;align-items:center;justify-content:center;font-size:.42rem}
+.oliver-lbl{font-size:.57rem;font-weight:700;color:#b58a00}
+.oliver-txt{font-size:.5rem;color:#555;line-height:1.5}
+.ph-breakdown{font-size:.52rem;color:#aaa;text-align:center;margin-top:6px}
+
+/* ─── HOW IT WORKS ─── */
+.section{padding:80px 48px}
+.section-label{font-size:.78rem;font-weight:600;color:var(--green-light);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--green);margin-bottom:40px;max-width:500px}
+.section-title.center{text-align:center;margin-left:auto;margin-right:auto}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.step-card{background:var(--white);border-radius:20px;overflow:hidden;border:1px solid var(--border)}
+.step-img{width:100%;height:180px;object-fit:cover}
+.step-body{padding:20px}
+.step-num{font-size:.75rem;font-weight:700;color:var(--green-light);margin-bottom:6px}
+.step-title{font-weight:700;font-size:1rem;margin-bottom:6px;color:var(--text)}
+.step-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
+
+/* ─── HEALTH BENEFITS ─── */
+.health-section{background:var(--green);padding:80px 48px;color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.health-left{}
+.health-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);color:#fff;margin-bottom:16px}
+.health-sub{font-size:.9rem;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:32px}
+.benefit-block{margin-bottom:32px}
+.benefit-block h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.benefit-block h3 span{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.benefit-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.benefit-list li{font-size:.85rem;color:rgba(255,255,255,.75);padding-left:18px;position:relative;line-height:1.5}
+.benefit-list li::before{content:'✓';position:absolute;left:0;color:#a8cc6e;font-size:.75rem}
+.health-right{display:flex;flex-direction:column;gap:16px}
+.health-card{border-radius:18px;overflow:hidden;position:relative}
+.health-card img{width:100%;height:200px;object-fit:cover;display:block}
+.health-card-tag{
+  position:absolute;bottom:12px;left:12px;
+  background:rgba(255,255,255,.92);
+  border-radius:999px;padding:5px 14px;
+  font-size:.75rem;font-weight:600;color:var(--green);
+  backdrop-filter:blur(4px);
+}
+.health-badges{display:flex;gap:10px}
+.hbadge{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:14px;text-align:center}
+.hbadge .val{font-family:'DM Serif Display',serif;font-size:1.6rem;color:#fff}
+.hbadge .lab{font-size:.72rem;color:rgba(255,255,255,.6);margin-top:2px}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials{padding:80px 48px;background:var(--bg)}
+.testi-header{text-align:center;margin-bottom:48px}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:860px;margin:0 auto}
+.testi-card{background:#fff;border-radius:20px;padding:28px;border:1px solid var(--border);position:relative}
+.testi-quote{font-size:.95rem;color:var(--text);line-height:1.7;margin-bottom:20px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-author img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.testi-name{font-weight:700;font-size:.9rem;color:var(--text)}
+.testi-role{font-size:.78rem;color:var(--muted)}
+.stars{color:#f5c842;font-size:.85rem;margin-bottom:10px;letter-spacing:2px}
+.featured-testi{
+  background:var(--bg2);border-radius:24px;
+  max-width:860px;margin:0 auto 80px;padding:48px;
+  display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:center;
+}
+.featured-testi img{width:100%;height:260px;object-fit:cover;border-radius:16px;filter:grayscale(10%)}
+.featured-quote{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--green);line-height:1.4;margin-bottom:16px}
+.featured-name{font-weight:700;font-size:.95rem}
+.featured-sub{font-size:.82rem;color:var(--muted)}
+
+/* ─── COMPARISON ─── */
+.compare-section{background:var(--green);padding:80px 48px;border-radius:0}
+.compare-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:#fff;text-align:center;margin-bottom:10px}
+.compare-sub{text-align:center;color:rgba(255,255,255,.65);font-size:.9rem;margin-bottom:40px}
+.compare-table{max-width:700px;margin:0 auto;background:rgba(255,255,255,.07);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.compare-header{display:grid;grid-template-columns:1fr 80px 80px 80px;gap:0;padding:16px 24px;background:rgba(255,255,255,.05)}
+.compare-header span{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.5);text-align:center}
+.compare-header span:first-child{text-align:left}
+.compare-row{display:grid;grid-template-columns:1fr 80px 80px 80px;gap:0;padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);align-items:center}
+.compare-row:hover{background:rgba(255,255,255,.04)}
+.compare-feature{font-size:.88rem;color:rgba(255,255,255,.85)}
+.compare-cell{text-align:center;font-size:1rem}
+.check{color:#8bc34a}
+.cross{color:rgba(255,255,255,.25)}
+.col-olive{background:rgba(139,195,74,.08)}
+
+/* ─── PRICING ─── */
+.pricing-section{padding:80px 48px;background:var(--bg)}
+.pricing-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--green);text-align:center;margin-bottom:8px}
+.pricing-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:48px}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:700px;margin:0 auto}
+.price-card{background:#fff;border-radius:24px;padding:32px;border:1px solid var(--border)}
+.price-card.featured{background:var(--green);border-color:var(--green)}
+.price-tag{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--green);margin-bottom:4px}
+.price-card.featured .price-tag{color:#fff}
+.price-period{font-size:.8rem;color:var(--muted)}
+.price-card.featured .price-period{color:rgba(255,255,255,.6)}
+.price-name{font-weight:700;font-size:1rem;margin-bottom:4px;color:var(--text)}
+.price-card.featured .price-name{color:#fff}
+.price-desc{font-size:.82rem;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.price-card.featured .price-desc{color:rgba(255,255,255,.65)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.price-features li{font-size:.85rem;color:var(--text);padding-left:20px;position:relative}
+.price-card.featured .price-features li{color:rgba(255,255,255,.85)}
+.price-features li::before{content:'✓';position:absolute;left:0;color:var(--green-light);font-weight:700}
+.price-card.featured .price-features li::before{color:#a8cc6e}
+
+/* ─── PROTECT BANNER ─── */
+.protect-banner{
+  margin:0 48px 80px;border-radius:24px;overflow:hidden;position:relative;height:320px;
+}
+.protect-banner img{width:100%;height:100%;object-fit:cover;display:block}
+.protect-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(30,45,15,.82) 0%,rgba(30,45,15,.4) 100%);
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:48px;
+}
+.protect-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);color:#fff;margin-bottom:20px;max-width:380px}
+.protect-btn{background:#fff;color:var(--green);border:none;padding:12px 26px;border-radius:999px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:transform .15s}
+.protect-btn:hover{transform:translateY(-2px)}
+
+/* ─── INDEPENDENT ─── */
+.independent{padding:80px 48px;text-align:center;background:var(--bg)}
+.indep-headline{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5rem);color:#e8a0b4;line-height:1.1;margin-bottom:24px}
+.indep-headline em{color:var(--green);font-style:normal}
+.indep-text{font-size:.95rem;color:var(--muted);max-width:560px;margin:0 auto;line-height:1.75}
+.indep-text strong{color:var(--text);font-weight:600}
+
+/* ─── FAQ ─── */
+.faq-section{padding:80px 48px;background:var(--bg2)}
+.faq-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--green);text-align:center;margin-bottom:8px}
+.faq-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:48px}
+.faq-list{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:4px}
+.faq-item{background:#fff;border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.faq-q{
+  padding:18px 22px;font-weight:600;font-size:.92rem;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background .2s;
+}
+.faq-q:hover{background:#fafaf7}
+.faq-q .arrow{font-size:.8rem;color:var(--muted);transition:transform .3s}
+.faq-item.open .faq-q .arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s}
+.faq-item.open .faq-a{max-height:300px;padding:0 22px 18px}
+.faq-a p{font-size:.88rem;color:var(--muted);line-height:1.7}
+
+/* ─── CTA FOOTER ─── */
+.cta-section{
+  margin:0 48px 0;border-radius:24px 24px 0 0;overflow:hidden;
+  background:var(--green);position:relative;
+}
+.cta-inner{padding:72px 60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.cta-text-col{}
+.cta-chip{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+.cta-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);color:#fff;margin-bottom:20px;line-height:1.2}
+.cta-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.cta-features li{font-size:.88rem;color:rgba(255,255,255,.75);padding-left:20px;position:relative}
+.cta-features li::before{content:'✓';position:absolute;left:0;color:#a8cc6e}
+.cta-btns{display:flex;gap:12px;flex-wrap:wrap}
+.cta-img-col{position:relative;display:flex;justify-content:flex-end}
+.cta-img-col img{width:240px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+
+/* ─── FOOTER NAV ─── */
+footer{background:var(--green);padding:40px 48px 32px;border-top:1px solid rgba(255,255,255,.1)}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+.footer-brand{}
+.footer-logo{display:flex;align-items:center;gap:6px;text-decoration:none;font-family:'DM Serif Display',serif;font-size:1.2rem;color:#fff;margin-bottom:12px}
+.footer-tagline{font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.6}
+.footer-col h4{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col ul li a{text-decoration:none;font-size:.85rem;color:rgba(255,255,255,.65);transition:color .2s}
+.footer-col ul li a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+.footer-copy{font-size:.78rem;color:rgba(255,255,255,.35)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  .section{padding:56px 20px}
+  .steps-grid{grid-template-columns:1fr}
+  .health-section{grid-template-columns:1fr;padding:56px 20px}
+  .testi-grid{grid-template-columns:1fr}
+  .featured-testi{grid-template-columns:1fr;padding:28px}
+  .pricing-grid{grid-template-columns:1fr}
+  .protect-banner{margin:0 20px 56px}
+  .cta-inner{grid-template-columns:1fr;padding:48px 28px}
+  .cta-img-col{display:none}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  footer{padding:40px 20px}
+  .compare-section{padding:56px 20px}
+  .phone-stage{padding:36px 16px 0}
+  .side-phone{width:70px}
+  .main-phone{width:200px}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#" class="logo">
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="17" r="10" fill="#2d3f1f"/>
+      <path d="M14 7 Q17 2 14 0 Q11 2 14 7Z" fill="#5a7a38"/>
+      <circle cx="14" cy="17" r="6" fill="#f3f1ea" opacity="0.12"/>
+    </svg>
+    live
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="drop">Solutions</a></li>
+    <li><a href="#">Features</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#" class="drop">Blog</a></li>
+    <li><a href="#">Restaurants</a></li>
+    <li><a href="#" class="drop">Food</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-link">Sign in</button>
+    <button class="btn-pill">Get Olive →</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div style="text-align:center;padding:64px 24px 0">
+  <div class="trust-chip">
+    <div class="avatars">
+      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=52&h=52&fit=crop&crop=face" alt="user"/>
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=52&h=52&fit=crop&crop=face" alt="user"/>
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=52&h=52&fit=crop&crop=face" alt="user"/>
+      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=52&h=52&fit=crop&crop=face" alt="user"/>
+    </div>
+    Trusted by thousands of healthy families
+  </div>
+  <h1 class="hero-title">The Safest Way to<br>Shop for Groceries</h1>
+  <p class="hero-sub">Use the Olive Food Scanner App to Instantly Eliminate Harmful Ingredients from Your Family's Diet and Get Expert-Backed Food Insights</p>
+  <div class="hero-btns">
+    <button class="btn-ios">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download for iOS
+    </button>
+    <button class="btn-text">Join the Olive Community →</button>
+  </div>
+</div>
+
+<!-- Phone Mockup Stage -->
+<div class="phone-stage reveal">
+  <div class="side-phone" style="height:260px">
+    <img src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?w=200&h=400&fit=crop" alt=""/>
+  </div>
+  <div class="main-phone">
+    <div class="notch"></div>
+    <div class="ph-header">
+      <span class="ph-header-t">🛒 Scan Results</span>
+      <div class="ph-icons"><span>🔔</span><span>👤</span></div>
+    </div>
+    <div class="shelf">
+      <div class="shelf-item"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=100&h=100&fit=crop" alt=""/></div>
+      <div class="shelf-item active"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=100&h=100&fit=crop" alt=""/></div>
+      <div class="shelf-item"><img src="https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=100&h=100&fit=crop" alt=""/></div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-inner">
+        <img class="pcard-img" src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=80&h=80&fit=crop" alt="product"/>
+        <div class="pcard-info">
+          <div class="pcard-name">Fig and Olive Crackers, Fig and Olive</div>
+          <div class="pcard-sub">Lesley Stowe</div>
+          <div class="score-row">
+            <span class="score-badge">46/100 · Poor</span>
+            <div class="sa"><span>♡</span><span>⤴</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="oliver">
+      <div class="oliver-h">
+        <div class="oliver-ico">⚠</div>
+        <span class="oliver-lbl">Oliver Says:</span>
+      </div>
+      <p class="oliver-txt">"This product's low score mainly comes from the processed sugars, like honey and brown sugar, which can impact your family's health when consumed frequently, especially for kids who are still developing. Additionally, there are several additives that aren't ideal for your goal of avoiding processed foods."</p>
+    </div>
+    <div class="ph-breakdown">Breakdown ↓</div>
+  </div>
+  <div class="side-phone" style="height:220px">
+    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&h=400&fit=crop" alt=""/>
+  </div>
+</div>
+
+<!-- ─── HOW IT WORKS ─── -->
+<div class="section reveal">
+  <div style="text-align:center;margin-bottom:48px">
+    <div class="section-label">Simple Process</div>
+    <h2 class="section-title center">How the Olive Food<br>Scanner App Works</h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal">
+      <img class="step-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="Scan"/>
+      <div class="step-body">
+        <div class="step-num">Step 01</div>
+        <div class="step-title">Scan Any Product</div>
+        <p class="step-desc">Point your camera at any grocery barcode and get an instant analysis of every ingredient inside.</p>
+      </div>
+    </div>
+    <div class="step-card reveal">
+      <img class="step-img" src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=600&h=400&fit=crop" alt="Analysis"/>
+      <div class="step-body">
+        <div class="step-num">Step 02</div>
+        <div class="step-title">Get Instant Analysis</div>
+        <p class="step-desc">Our AI evaluates over 300+ harmful additives, giving your product a transparent health score from 0–100.</p>
+      </div>
+    </div>
+    <div class="step-card reveal">
+      <img class="step-img" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop" alt="Family"/>
+      <div class="step-body">
+        <div class="step-num">Step 03</div>
+        <div class="step-title">Shop with Confidence</div>
+        <p class="step-desc">Build your family's safe grocery list with products you can trust, backed by nutrition experts.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HEALTH BENEFITS ─── -->
+<div class="health-section reveal">
+  <div class="health-left">
+    <div class="section-label" style="color:rgba(255,255,255,.5)">Why Olive</div>
+    <h2 class="health-title">Health Benefits of Using Olive</h2>
+    <p class="health-sub">Olive provides ingredient-level transparency for every product in your cart so your family eats cleaner, effortlessly.</p>
+
+    <div class="benefit-block">
+      <h3><span>🎯</span> Achieve Nutritional Clarity</h3>
+      <ul class="benefit-list">
+        <li>Understand exactly what goes into every product you buy</li>
+        <li>Identify hidden sugars, trans fats and harmful additives instantly</li>
+        <li>Get personalised recommendations based on your family's health goals</li>
+        <li>Track nutritional trends over time with smart insights</li>
+      </ul>
+    </div>
+
+    <div class="benefit-block">
+      <h3><span>🛡️</span> Proactive Ingredient Filtering</h3>
+      <ul class="benefit-list">
+        <li>Flag over 300+ additives linked to long-term health risks</li>
+        <li>Set custom filters for allergens, intolerances and dietary preferences</li>
+        <li>Get safer product alternatives suggested automatically</li>
+      </ul>
+    </div>
+
+    <div class="benefit-block">
+      <h3><span>🥦</span> Real Health Choices for Your Family</h3>
+      <ul class="benefit-list">
+        <li>Expert-backed guidance on every food category</li>
+        <li>Kid-safe product badges for children's nutrition</li>
+        <li>Community-vetted healthy picks from real parents</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="health-right">
+    <div class="health-card">
+      <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=300&fit=crop" alt="Fresh groceries"/>
+      <div class="health-card-tag">🌿 Clean Eating Made Simple</div>
+    </div>
+    <div class="health-card">
+      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=300&fit=crop" alt="Healthy food"/>
+      <div class="health-card-tag">👨‍👩‍👧 Family Nutrition</div>
+    </div>
+    <div class="health-badges">
+      <div class="hbadge">
+        <div class="val">300+</div>
+        <div class="lab">Additives Tracked</div>
+      </div>
+      <div class="hbadge">
+        <div class="val">2M+</div>
+        <div class="lab">Products in DB</div>
+      </div>
+      <div class="hbadge">
+        <div class="val">98%</div>
+        <div class="lab">Parent Approval</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TESTIMONIALS ─── -->
+<div class="testimonials">
+  <div class="testi-header reveal">
+    <div class="section-label">Real Stories</div>
+    <h2 class="section-title center">Real Mothers.<br>Real Results.</h2>
+  </div>
+  <div class="featured-testi reveal">
+    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=520&fit=crop&crop=face" alt="Sarah"/>
+    <div>
+      <div class="stars">★★★★★</div>
+      <p class="featured-quote">"Olive completely changed how I shop. I used to spend hours reading labels — now I scan in seconds and know exactly what I'm feeding my kids."</p>
+      <div class="featured-name">Sarah M.</div>
+      <div class="featured-sub">Mother of 3, New York · Olive user since 2023</div>
+    </div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"As a nutritionist, I recommend Olive to all my clients. The science behind the scores is solid and the interface is incredibly intuitive."</p>
+      <div class="testi-author">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=88&h=88&fit=crop&crop=face" alt="Dr. Lisa"/>
+        <div>
+          <div class="testi-name">Dr. Lisa Chen</div>
+          <div class="testi-role">Registered Nutritionist</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"My daughter has food allergies and Olive gives me peace of mind every single shopping trip. I can't imagine going back to reading tiny labels."</p>
+      <div class="testi-author">
+        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=88&h=88&fit=crop&crop=face" alt="Maria"/>
+        <div>
+          <div class="testi-name">Maria T.</div>
+          <div class="testi-role">Mom & Blogger, Chicago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── COMPARISON ─── -->
+<div class="compare-section reveal">
+  <h2 class="compare-title">Olive Food Scanner App vs. The Rest</h2>
+  <p class="compare-sub">See why families choose Olive over outdated alternatives</p>
+  <div class="compare-table">
+    <div class="compare-header">
+      <span>Feature</span>
+      <span style="color:rgba(139,195,74,.9)">🫒 Olive</span>
+      <span>Others</span>
+      <span>Manual</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Instant Barcode Scanning</span>
+      <span class="compare-cell check col-olive">✓</span>
+      <span class="compare-cell cross">✗</span>
+      <span class="compare-cell cross">✗</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">300+ Additive Database</span>
+      <span class="compare-cell check col-olive">✓</span>
+      <span class="compare-cell cross">✗</span>
+      <span class="compare-cell cross">✗</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Expert-Backed Scores</span>
+      <span class="compare-cell check col-olive">✓</span>
+      <span class="compare-cell check">✓</span>
+      <span class="compare-cell cross">✗</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">AI Personalisation</span>
+      <span class="compare-cell check col-olive">✓</span>
+      <span class="compare-cell cross">✗</span>
+      <span class="compare-cell cross">✗</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Safer Alternative Finder</span>
+      <span class="compare-cell check col-olive">✓</span>
+      <span class="compare-cell cross">✗</span>
+      <span class="compare-cell cross">✗</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PRICING ─── -->
+<div class="pricing-section">
+  <h2 class="pricing-title reveal">Healthy Choices.<br>Honest Pricing.</h2>
+  <p class="pricing-sub reveal">Start free. Upgrade when you're ready.</p>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tag">$0</div>
+      <div class="price-period">/ month forever</div>
+      <div style="height:16px"></div>
+      <div class="price-name">Free Plan</div>
+      <p class="price-desc">Everything you need to get started with clean eating for your family.</p>
+      <ul class="price-features">
+        <li>10 scans per day</li>
+        <li>Basic ingredient breakdown</li>
+        <li>Health score (0–100)</li>
+        <li>Community access</li>
+      </ul>
+      <button class="btn-pill green-outline" style="width:100%;justify-content:center">Get Started Free</button>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-tag">$9.99</div>
+      <div class="price-period">/ month, billed annually</div>
+      <div style="height:16px"></div>
+      <div class="price-name">Family Pro</div>
+      <p class="price-desc">Unlimited scanning, personalisation and expert guidance for your whole family.</p>
+      <ul class="price-features">
+        <li>Unlimited scans</li>
+        <li>AI Oliver advisor</li>
+        <li>Allergen custom filters</li>
+        <li>Safe alternatives finder</li>
+        <li>Priority expert support</li>
+      </ul>
+      <button class="btn-pill" style="width:100%;justify-content:center;background:#fff;color:var(--green)">Start 7-Day Free Trial</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROTECT BANNER ─── -->
+<div class="protect-banner reveal">
+  <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&h=500&fit=crop" alt="Healthy food bowl"/>
+  <div class="protect-overlay">
+    <h2 class="protect-title">Protect Your Family From Hidden Toxins</h2>
+    <button class="protect-btn">Download the App →</button>
+  </div>
+</div>
+
+<!-- ─── INDEPENDENT ─── -->
+<div class="independent reveal">
+  <p class="indep-headline">100% Independent.<br><em>Always.</em></p>
+  <p class="indep-text">We never monetise through brand deals, affiliate links, or ads — so our <strong>scores and recommendations</strong> are always aligned with your causes.</p>
+</div>
+
+<!-- ─── FAQ ─── -->
+<div class="faq-section">
+  <div class="section-label" style="text-align:center;margin-bottom:10px">Got Questions?</div>
+  <h2 class="faq-title reveal">Frequently Asked<br>Questions by Parents</h2>
+  <p class="faq-sub reveal">Everything you need to know about Olive</p>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q">What does Olive's food score mean? <span class="arrow">▾</span></div>
+      <div class="faq-a"><p>Olive scores products from 0–100 based on ingredient quality, additive safety, and nutritional value. A score above 70 is considered good, 50–70 average, and below 50 means the product contains ingredients you may want to avoid for your family.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">How accurate is the ingredient database? <span class="arrow">▾</span></div>
+      <div class="faq-a"><p>Our database covers over 2 million products and is updated daily. We source data from manufacturers, public databases, and a network of nutrition researchers who verify ingredient information regularly.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Can I use Olive for my child's dietary restrictions? <span class="arrow">▾</span></div>
+      <div class="faq-a"><p>Absolutely. Olive lets you set custom filters for common allergens (nuts, dairy, gluten, soy) and over 50 dietary preferences. Products that trigger your filters are clearly flagged during scanning.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Is my data private with Olive? <span class="arrow">▾</span></div>
+      <div class="faq-a"><p>Your health data and scan history are encrypted and never sold to third parties. We are 100% independent and earn revenue only from subscriptions, not advertising or brand partnerships.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Does Olive work for restaurant menus? <span class="arrow">▾</span></div>
+      <div class="faq-a"><p>Yes! Olive has a growing restaurant database that covers major chains and independent restaurants. You can check ingredient transparency and allergen information before ordering.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CTA SECTION ─── -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-text-col reveal">
+      <div class="cta-chip">Start Today — It's Free</div>
+      <h2 class="cta-title">Keep your family safe with Olive</h2>
+      <ul class="cta-features">
+        <li>Scan any grocery product instantly</li>
+        <li>Get expert-backed health scores</li>
+        <li>Eliminate harmful hidden ingredients</li>
+        <li>Find safer alternatives automatically</li>
+      </ul>
+      <div class="cta-btns">
+        <button class="btn-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download for iOS
+        </button>
+        <button class="btn-pill outline">Get Olive Free →</button>
+      </div>
+    </div>
+    <div class="cta-img-col">
+      <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=480&h=600&fit=crop" alt="Healthy food"/>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="footer-logo">
+        <svg viewBox="0 0 20 20" fill="none" width="20" height="20"><circle cx="10" cy="13" r="7" fill="rgba(255,255,255,0.9)"/><path d="M10 6 Q12 2 10 0 Q8 2 10 6Z" fill="rgba(255,255,255,0.6)"/></svg>
+        live
+      </a>
+      <p class="footer-tagline">The safest way to shop<br>for groceries for your family.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Solutions</h4>
+      <ul>
+        <li><a href="#">For Families</a></li>
+        <li><a href="#">For Restaurants</a></li>
+        <li><a href="#">For Nutritionists</a></li>
+        <li><a href="#">Enterprise</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Download</a></li>
+        <li><a href="#">Changelog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Cookies</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2024 Olive. All rights reserved.</span>
+    <span class="footer-copy">Made with 🫒 for healthy families</span>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
