@@ -1,18 +1,12 @@
 # 🫒 Olive – Landing Page Recreation
 
-A pixel-perfect frontend recreation of the [Olive App](https://www.oliveapp.com/) landing page, built as part of the **Hire My Idea – Full Stack Developer Intern** assignment.
+A pixel-perfect frontend recreation of the [Olive App](https://www.oliveapp.com/) landing page.
 
 ---
 
 ## 🚀 Live Demo
 
 > [View Live on Vercel](#) <!-- Replace with your deployed URL -->
-
----
-
-## 📋 Assignment
-
-Recreate the Olive App homepage as closely as possible using any frontend framework or tooling of choice.
 
 ---
 
@@ -74,7 +68,7 @@ No installation needed:
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/olive-landing.git
+https://github.com/SupercopV/Olive-landing-page.git
 
 # Open in browser
 open index.html
@@ -86,5 +80,5 @@ Or just double-click `index.html` — it works offline (images load from Unsplas
 
 ## 📬 Submitted By
 
-**Vamshi**
-Full Stack Developer Intern Applicant
+**Vamshi Bayagani**
+
